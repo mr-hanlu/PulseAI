@@ -13,14 +13,10 @@ BASE_DIR = Path(__file__).parent.parent
 
 # 数据目录
 DATA_DIR = BASE_DIR / "data"
-# RAW_DATA_DIR = DATA_DIR / "raw"
-# RAW_API_DIR = DATA_DIR / "raw_api"
-# PROCESSED_DATA_DIR = DATA_DIR / "processed"
 COOKIES_DIR = DATA_DIR / "cookies"
 CHECKPOINTS_DIR = DATA_DIR / "checkpoints"
 
 # 确保目录存在
-# for dir_path in [RAW_DATA_DIR, RAW_API_DIR, PROCESSED_DATA_DIR, COOKIES_DIR, CHECKPOINTS_DIR]:
 for dir_path in [COOKIES_DIR, CHECKPOINTS_DIR]:
     dir_path.mkdir(parents=True, exist_ok=True)
 
