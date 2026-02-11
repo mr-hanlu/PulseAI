@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI热点报告 - {{ report.date_key }}</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+
+        .report-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .report-title {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .report-meta {
+            color: #666;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .report-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="/" class="back-button">← 返回列表</a>
+
+        <div class="report-header">
+            <h1 class="report-title">📊 AI热点分析报告</h1>
+            <div class="report-meta">
+                <span>📅 日期: {{ report.date_key }}</span>
+                <span>⏰ 生成时间: {{ report.created_at }}</span>
+                {% if report.time_range_start and report.time_range_end %}
+                <span>🕐 分析时段: {{ report.time_range_start }} ~ {{ report.time_range_end }}</span>
+                {% endif %}
+                <span>📊 分析帖子数: {{ report.post_count }}</span>
+                {% if report.source %}
+                <span>🔖 数据源: {{ report.source }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="report-content">
+            <div class="markdown-body" id="markdown-content"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        // 渲染 Markdown
+        // 配置 marked 选项，将换行符渲染为 <br>
+        marked.use({
+            breaks: true,
+            gfm: true
+        });
+        const markdownContent = {{ report.report_content| tojson }};
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdownContent);
+    </script>
+</body>
+
+</html>
